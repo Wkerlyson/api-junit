@@ -7,6 +7,8 @@ import com.apiunit.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -16,5 +18,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+    }
+
+    @Override
+    public List<User> findAll() {
+        return repository.findAll();
     }
 }
