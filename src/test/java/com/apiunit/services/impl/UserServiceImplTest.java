@@ -12,8 +12,9 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -27,6 +28,7 @@ class UserServiceImplTest {
     public static final String EMAIL    = "wk@gmail.com";
     public static final String PASSWORD = "123";
     public static final String OBJECT_NOT_FOUND = "Object not found";
+    public static final int INDEX = 0;
 
     @InjectMocks
     private UserServiceImpl service;
@@ -67,7 +69,17 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
+    void whenFindAllThenReturnAnListOfUsers() {
+        when(repository.findAll()).thenReturn(Arrays.asList(user));
+
+        List<User> list = service.findAll();
+
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals(User.class, list.get(INDEX).getClass());
+        assertEquals(ID, list.get(INDEX).getId());
+        assertEquals(NAME, list.get(INDEX).getName());
+        assertEquals(EMAIL, list.get(INDEX).getEmail());
     }
 
     private void startUser(){
